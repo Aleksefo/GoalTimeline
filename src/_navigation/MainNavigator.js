@@ -1,10 +1,11 @@
 import DashboardScreen from '../DashboardScreen/DashboardScreen'
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation'
 import {colors, hei} from '../_values/styles'
+import strings from '../_values/strings'
 
 const MainStack = createStackNavigator(
 	{
-		Dashboard: {screen: DashboardScreen},
+		Dashboard: {screen: DashboardScreen, navigationOptions: {headerTitle: strings.dashboard}},
 	},
 	{
 		initialRouteName: 'Dashboard',
@@ -44,7 +45,7 @@ const MainStack = createStackNavigator(
 	},
 )
 
-export default (Drawer = createDrawerNavigator(
+export default Drawer = createDrawerNavigator(
 	{
 		MainStack: {screen: MainStack},
 	},
@@ -54,4 +55,4 @@ export default (Drawer = createDrawerNavigator(
 		// contentComponent: props => <CustomDrawer {...props} />,
 		// initialRouteName: 'Dashboard',
 	},
-))
+)
