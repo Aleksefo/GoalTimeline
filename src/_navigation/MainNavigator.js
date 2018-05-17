@@ -2,10 +2,14 @@ import DashboardScreen from '../DashboardScreen/DashboardScreen'
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation'
 import {colors, hei} from '../_values/styles'
 import strings from '../_values/strings'
+import GoalDetailsScreen from '../GoalDetailsScreen/GoalDetailsScreen'
+import GoalEditScreen from '../GoalEditScreen/GoalEditScreen'
 
 const MainStack = createStackNavigator(
 	{
 		Dashboard: {screen: DashboardScreen, navigationOptions: {headerTitle: strings.dashboard}},
+		Edit: {screen: GoalEditScreen, navigationOptions: {headerTitle: strings.edit}},
+		Details: {screen: GoalDetailsScreen, navigationOptions: {headerTitle: strings.details}},
 	},
 	{
 		initialRouteName: 'Dashboard',

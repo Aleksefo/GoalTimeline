@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import {View, StyleSheet, Text} from 'react-native'
 
 export default class GoalEditScreen extends Component {
 	state = {}
@@ -7,7 +7,7 @@ export default class GoalEditScreen extends Component {
 	render() {
 		// const {} = styles
 		return (
-	        <View></View>
+	        <View><Text>Edit</Text></View>
 		)
 	}
 }
