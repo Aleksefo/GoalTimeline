@@ -7,7 +7,7 @@ export default class AssetsStore {
 
 	@observable time = '09:00'
 	@observable title = ''
-	@observable description
+	@observable description = ''
 
 	@action
 	saveAsset(navigation) {
@@ -21,6 +21,8 @@ export default class AssetsStore {
 			// date: new Date().toISOString().slice(0, 10),
 		}
 		this.parsedData.unshift(itemData)
+		this.title=''
+		description = ''
 		storeItem('AssetData', itemData, navigation)
 		// }
 	}
@@ -28,8 +30,11 @@ export default class AssetsStore {
 	loadData() {
 		retrieveItem('AssetData').then(data => {
 			if (data !== null) {
+				console.log('Got data, reversing',data )
+
 				this.parsedData = data.reverse()
 			} else {
+				console.log('No data was loaded')
 				this.noData = true
 			}
 		})

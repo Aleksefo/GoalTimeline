@@ -5,27 +5,23 @@ import {colors, hei, wid} from '../_values/styles'
 import strings from '../_values/strings'
 import {observer, inject} from 'mobx-react'
 import {clearItems} from '../_services/storageService'
+import {Button} from 'native-base'
+import myRay from '../_values/TEST'
 
 @inject('dataStore')
 @observer
 export default class DashboardScreen extends Component {
-	constructor() {
-		super()
-		this.data = [
-			{time: '5', title: 'Event 1', description: 'Event 1 Description'},
-			{time: '10:45', title: 'Event 2', description: 'Event 2 Description'},
-			{time: '11', title: 'Event 3', description: 'Event 3 Description'},
-			{time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
-			{time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
-		]
+	constructor(props) {
+		super(props)
+		this.data = props.dataStore.parsedData
 	}
 
 	static navigationOptions = ({navigation}) => {
 		return {
 			headerRight: (
 				<TouchableOpacity
-					onPress={() =>
-					{navigation.navigate('Edit'
+					onPress={() => {
+						navigation.navigate('Edit'
 							, {
 								item: {
 									title: '',
@@ -52,32 +48,55 @@ export default class DashboardScreen extends Component {
 
 	render() {
 		console.log('App rendered')
-		testData = this.props.dataStore.parsedData
-		console.log(`dataStore is `, this.data)
+		console.log('Mobx', this.props.dataStore.parsedData)
+		console.log('original', myRay)
+
+
 		return (
 			<View>
 				<StatusBar backgroundColor={colors.primary} barStyle="light-content"/>
 				{this.props.dataStore.noData ? (
 					<Text>{strings.noData}</Text>
 				) : (
-					<View style={{height: hei*0.5}}>
+					<View style={{height: hei * 0.3}}>
 						<Timeline
-							// data={this.props.dataStore.parsedData}
-							data={this.data}
+							data={this.props.dataStore.parsedData}
+							// data={this.data}
+							// data={myRay}
+							options={{
+								removeClippedSubviews: false
+							}}
+							timeContainerStyle={{minWidth:72}}
 						/>
 					</View>)}
-				<FlatList
-					// data={this.props.dataStore.parsedData}
-					data={this.props.dataStore.parsedData}
-					keyExtractor={(item, index) => index}
-					ItemSeparatorComponent={() => <View style={styles.separator} />}
-					renderItem={({item}) => <Text>{item.title}</Text>}
-				/>
+				{!this.props.dataStore.noData &&
+				(
+					<View style={{height: hei * 0.3, backgroundColor: 'pink'}}>
+						<FlatList
+							// data={myRay}
+							data={this.props.dataStore.parsedData}
+							keyExtractor={(item, index) => index}
+							ItemSeparatorComponent={() => <View style={styles.separator}/>}
+							renderItem={({item}) =>
+								<View style={{flexDirection: 'row'}}>
+									<Text>{`${item.title}  `}</Text>
+									<Text>{item.description}</Text>
+								</View>}
+						/>
+					</View>)}
+
+				<Button onPress={() => this.props.dataStore.parsedData.unshift({
+						description: 'Clid',
+						title: 'Clickd',
+						time: '5:00',
+						// date: new Date().toISOString().slice(0, 10),
+					})}>
+					<Text style={{color: colors.lightText, marginRight: wid * 0.05}}>Save</Text>
+				</Button>
 			</View>
 		)
 	}
 }
-
 const styles = StyleSheet.create({
 	styleTop: {},
 })
